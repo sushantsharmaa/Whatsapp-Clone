@@ -1,4 +1,9 @@
-import { Chat, DonutLarge, MoreVert } from "@mui/icons-material";
+import {
+  Chat,
+  DonutLarge,
+  MoreVert,
+  SearchOutlined,
+} from "@mui/icons-material";
 import { Avatar, IconButton } from "@mui/material";
 import "./sidebar.css";
 
@@ -19,7 +24,12 @@ const Sidebar = () => {
           </IconButton>
         </div>
       </div>
-      <div className="sidebar-search"></div>
+      <div className="sidebar-search">
+        <div className="sidebar-search-container">
+          <SearchOutlined />
+          <input type="text" placeholder="Search or start new chat" />
+        </div>
+      </div>
       <div className="sidebar-chats"></div>
     </div>
   );
