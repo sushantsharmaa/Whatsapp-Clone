@@ -2,7 +2,7 @@
   flex: 0.37;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #dcdcdc;
+  border-right: 1px solid #f2f2f2;
 }
 
 .sidebar-header {
@@ -30,7 +30,7 @@
   align-items: center;
   height: 39px;
   padding: 5px 10px 5px 10px;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .sidebar-search-container {
@@ -54,4 +54,8 @@
 
 .sidebar-search-container > input:focus {
   outline: none;
+}
+
+.sidebar-chats {
+  flex: 1;
 }
