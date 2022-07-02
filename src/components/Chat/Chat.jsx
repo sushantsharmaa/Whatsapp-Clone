@@ -11,10 +11,14 @@ import "./chat.css";
 
 const Chat = () => {
   const [string, setString] = useState();
+  const [message, setMessage] = useState();
 
   useEffect(() => {
     setString(Math.floor(Math.random() * 5000));
   }, []);
+
+  const sendMessage = (e) => {};
+
   return (
     <div className="chat">
       <div className="chat-header">
@@ -44,8 +48,14 @@ const Chat = () => {
         <InsertEmoticon className="icon" />
         <AttachFile className="icon rotate" />
         <form>
-          <input type="text" placeholder="Type a message" />
-          <button>Send</button>
+          <input
+            type="text"
+            placeholder="Type a message"
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button onClick={sendMessage} type="submit">
+            Send
+          </button>
         </form>
         <Mic className="icon" />
       </div>
