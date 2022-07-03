@@ -93,6 +93,10 @@
   outline: none;
 }
 
-.chat-footer > form > button {
-  display: none;
+.chat-footer .btn {
+  display: flex;
+  align-items: center;
+  border: none;
+  color: #54656f;
+  background-color: #f0f2f5;
 }

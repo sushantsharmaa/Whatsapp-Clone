@@ -8,7 +8,15 @@ import { Avatar, IconButton } from "@mui/material";
 import SidebarChat from "../SidebarChat/SidebarChat";
 import "./sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({
+  socket,
+  room,
+  setRoom,
+  userName,
+  showChat,
+  setUserName,
+  setShowChat,
+}) => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -32,8 +40,15 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="sidebar-chats">
-        <SidebarChat addNewChat />
-        <SidebarChat />
+        <SidebarChat
+          room={room}
+          socket={socket}
+          setRoom={setRoom}
+          showChat={showChat}
+          userName={userName}
+          setUserName={setUserName}
+          setShowChat={setShowChat}
+        />
       </div>
     </div>
   );
