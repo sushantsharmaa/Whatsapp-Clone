@@ -4,7 +4,7 @@ import Chat from "../../components/Chat/Chat";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { useState } from "react";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://quiet-cove-46644.herokuapp.com/");
 
 const Home = () => {
   const [userName, setUserName] = useState("");

@@ -8,22 +8,21 @@ import {
 import { Avatar, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import "./chat.css";
+import { v4 as uuidv4 } from "uuid";
+import ScrollToBottom from "react-scroll-to-bottom";
 import SendIcon from "@mui/icons-material/Send";
 
 const Chat = ({ socket, room, userName }) => {
   const [string, setString] = useState();
-  const [message, setMessage] = useState();
-
-  useEffect(() => {
-    setString(Math.floor(Math.random() * 5000));
-  }, []);
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
 
   const sendMessage = async () => {
-    if (message !== "") {
+    if (currentMessage !== "") {
       const messageData = {
         room: room,
         author: userName,
-        message: message,
+        message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
           ":" +
@@ -31,14 +30,20 @@ const Chat = ({ socket, room, userName }) => {
       };
 
       await socket.emit("send_message", messageData);
+      setMessageList((list) => [...list, messageData]);
+      setCurrentMessage("");
     }
   };
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
+      setMessageList((list) => [...list, data]);
     });
   }, [socket]);
+
+  useEffect(() => {
+    setString(Math.floor(Math.random() * 5000));
+  }, []);
 
   return (
     <div className="chat">
@@ -58,28 +63,53 @@ const Chat = ({ socket, room, userName }) => {
         </div>
       </div>
       <div className="chat-body">
-        <p className={`chat-message ${true && "chat-reciever"}`}>
-          Hie... <span className="chat-timestamp">8:17 PM</span>
-        </p>
-        <p className="chat-message">
-          Hello... <span className="chat-timestamp">8:18 PM</span>
-        </p>
+        <ScrollToBottom className="message-container">
+          {messageList.map((messageContent) => {
+            return (
+              <div
+                key={uuidv4()}
+                className="message"
+                id={userName === messageContent.author ? "you" : "other"}
+              >
+                <div>
+                  <div className="message-content">
+                    <p>
+                      {messageContent.message}
+                      <span className="chat-timestamp">
+                        {messageContent.time}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="message-meta">
+                    <p id="author">{messageContent.author}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </ScrollToBottom>
       </div>
       <div className="chat-footer">
         <InsertEmoticon className="icon" />
         <AttachFile className="icon rotate" />
-        <form>
+        <div className="form">
           <input
             type="text"
+            value={currentMessage}
             placeholder="Type a message"
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(event) => {
+              setCurrentMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage();
+            }}
           />
-          <div className="btn">
-            <IconButton onClick={sendMessage}>
-              <SendIcon className="icon" />
-            </IconButton>
-          </div>
-        </form>
+        </div>
+        <div className="btn">
+          <IconButton onClick={sendMessage}>
+            <SendIcon className="icon" />
+          </IconButton>
+        </div>
         <Mic className="icon" />
       </div>
     </div>

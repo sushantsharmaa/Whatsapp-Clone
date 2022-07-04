@@ -30,18 +30,45 @@
 
 .chat-body {
   flex: 1;
-  padding: 20px 60px 20px 60px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   background: url("https://i.postimg.cc/xd3Ytcdx/background.jpg");
 }
 
-.chat-message {
-  padding: 8px 10px 8px 10px;
-  font-size: 16px;
-  position: relative;
-  width: fit-content;
-  margin-bottom: 5px;
-  border-radius: 10px;
+.chat-body::-webkit-scrollbar {
+  display: none;
+}
+
+.message-container::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-body .message-container {
+  padding: 20px 60px 20px 60px;
+}
+
+.message {
+  height: auto;
+  padding: 10px;
+  display: flex;
+}
+
+.message .message-content {
+  width: auto;
+  height: auto;
+  min-height: 40px;
+  max-width: 120px;
   background-color: #ffff;
+  border-radius: 5px;
+  color: black;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .chat-timestamp {
@@ -50,9 +77,43 @@
   margin: 5px 0px 0px 12px;
 }
 
-.chat-reciever {
-  margin-left: auto;
+#you {
+  justify-content: flex-start;
+}
+
+#you .message-content {
+  justify-content: flex-start;
+}
+
+#you .message-meta {
+  justify-content: flex-start;
+  margin-left: 5px;
+}
+
+#other {
+  justify-content: flex-end;
+}
+
+#other .message-content {
+  justify-content: flex-end;
+  color: black;
   background-color: #d9fdd3;
+}
+
+#other .message-meta {
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
+.message-meta #author {
+  margin-left: 10px;
+  color: "#06283D";
+  font-weight: 300;
+}
+
+.chat-window .chat-body .message .message-meta {
+  display: flex;
+  font-size: 10px;
 }
 
 .chat-footer {
@@ -75,21 +136,21 @@
   transform: rotate(45deg);
 }
 
-.chat-footer > form {
+.chat-footer > .form {
   flex: 1;
   display: flex;
   height: 35px;
   background-color: #ffff;
 }
 
-.chat-footer > form > input {
+.chat-footer > .form > input {
   flex: 1;
   border: none;
   padding-left: 10px;
   border-radius: 50px;
 }
 
-.chat-footer > form > input:focus {
+.chat-footer > .form > input:focus {
   outline: none;
 }
 
